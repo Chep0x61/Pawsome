@@ -1,6 +1,7 @@
 # Pawsome
 
-### An IoT Device for Automated Pet Feeding at Home - Final Project for Cloud and IoT Security
+### Final Project for Cloud and IoT Security class
+### Pawsome, an IoT device for automated pet feeding
 
 ## Project Stack
 
