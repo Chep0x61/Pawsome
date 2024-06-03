@@ -75,7 +75,7 @@ const FixedNavbar: React.FC<FixedNavbarProps> = ({ onConfettiClick }) => {
             >
                 <div className="flex justify-between items-center h-full md:px-4">
                     <div className="flex ml-2 md:ml-4 gap-2">
-                        <img className="w-12" src="/paw.png" alt="Archo Logo" />
+                        <img className="w-12" src="/paw.png" alt="Pawsome Logo" />
                     </div>
 
                     <div className="hidden sm:flex md:flex flex-row gap-2 text-base">
