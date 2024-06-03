@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {HashRouter, Route } from 'react-router-dom';
+import {HashRouter, Route, Routes } from 'react-router-dom';
 import FixedNavbar from "./Components/FixedNavbar";
 import Hero from "./Pages/Landing/Hero";
 import DotPattern from "./Components/Dot-pattern";
@@ -25,6 +25,7 @@ const App = () => {
                 {showConfetti && <Confetti numberOfPieces={100} recycle={false} width={window.innerWidth} height={window.innerHeight} />}
             </div>
             <DotPattern className="z-[-1]"/>
+            <Routes>
                 <Route path="/" element={
                     <>
                         <FixedNavbar onConfettiClick={handleConfettiClick} />
@@ -36,6 +37,7 @@ const App = () => {
                     </>
                 } />
                 <Route path="/dashboard" element={<Dashboard />} />
+            </Routes>
         </HashRouter>
     );
 };
