@@ -19,7 +19,7 @@ const App = () => {
     };
 
     return (
-        <Router>
+        <>
             <div className="fixed z-[998]">
                 <Toaster />
                 {showConfetti && <Confetti numberOfPieces={100} recycle={false} width={window.innerWidth} height={window.innerHeight} />}
@@ -38,7 +38,7 @@ const App = () => {
                 } />
                 <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
-        </Router>
+        </>
     );
 };
 
