@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import FixedNavbar from "./Components/FixedNavbar";
 import Hero from "./Pages/Landing/Hero";
 import DotPattern from "./Components/Dot-pattern";
