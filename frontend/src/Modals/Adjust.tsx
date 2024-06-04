@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { ref, set } from 'firebase/database';
+import { database } from '../firebase';
 import ShimmerButton from '../Components/ShimmerButton';
 import toast from 'react-hot-toast';
 
@@ -16,8 +18,13 @@ const Adjust: React.FC<AdjustProps> = ({ initialLimit, onConfirm, onCancel }) =>
   };
 
   const handleConfirm = () => {
+    const dailyServiceLimitRef = ref(database, 'dailyServiceLimit');
+    set(dailyServiceLimitRef, limit);
     onConfirm(limit);
-    toast.success('The daily limit has been updated !');
+    toast.success('The daily limit has been updated!');
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   };
 
   const handleCancel = () => {

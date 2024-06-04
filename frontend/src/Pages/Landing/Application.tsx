@@ -28,7 +28,7 @@ const Application: React.FC = () => {
                     shimmerDuration="3s"
                     borderRadius="10px"
                     onClick={handleButtonClick}
-                    className="gap-2 rounded-lg flex p-2 items-center justify-center overflow-hidden bg-[#D0D0D0] color-[#f8f8f8] transition-all before:absolute before:h-0 before:w-0 before:rounded-full before:bg-[#f8f8f8] before:duration-500 before:ease-out hover:before:h-60 hover:before:w-60 text-black hover:text-black"
+                    className="gap-2 rounded-lg flex p-2 items-center justify-center overflow-hidden bg-[#D0D0D0] color-[#f8f8f8] transition-all before:absolute before:h-0 before:w-0 before:rounded-full before:bg-[#f8f8f8] before:duration-500 before:ease-out hover:before:h-64 hover:before:w-64 text-black hover:text-black"
                 >
                     <span className="relative z-10 text-center">🔎 Discover our Application</span>
                     <svg

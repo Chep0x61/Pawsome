@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ref, get } from 'firebase/database';
+import { database } from '../../firebase';
 import CustomModal from '../../Components/CustomModal';
 import Adjust from '../../Modals/Adjust';
 import Dispense from '../../Modals/Dispense';
@@ -10,18 +12,53 @@ import FixedRefresh from '../../Components/FixedRefresh';
 import Confetti from 'react-confetti';
 
 const Dashboard: React.FC = () => {
+  const [kibblesLeft, setKibblesLeft] = useState('?');
+  const [dailyRequestCounter, setDailyRequestCounter] = useState('?');
+  const [dailyFeedCounter, setDailyFeedCounter] = useState('?');
+  const [dailyServiceLimit, setDailyServiceLimit] = useState(0);
+
+  useEffect(() => {
+    const kibblesLeftRef = ref(database, 'kibblesLeft');
+    const dailyRequestCounterRef = ref(database, 'dailyRequestCounter');
+    const dailyFeedCounterRef = ref(database, 'dailyFeedCounter');
+    const dailyServiceLimitRef = ref(database, 'dailyServiceLimit');
+
+    get(kibblesLeftRef).then((snapshot) => {
+      setKibblesLeft(snapshot.val());
+    });
+
+    get(dailyRequestCounterRef).then((snapshot) => {
+      setDailyRequestCounter(snapshot.val());
+    });
+
+    get(dailyFeedCounterRef).then((snapshot) => {
+      setDailyFeedCounter(snapshot.val());
+    });
+
+    get(dailyServiceLimitRef).then((snapshot) => {
+      setDailyServiceLimit(Number(snapshot.val()));
+    });
+  }, []);
+
   const statsData = [
-    { title: 'Feed', value: '3', icon: '😋' },
-    { title: 'Remaining', value: '70', icon: '🎚️', circle: true },
-    { title: 'Limit', value: '5', icon: '🛑' },
-    { title: 'Requests', value: '3', icon: '🙀' },
+    { title: 'Feed', value: dailyFeedCounter, icon: '😋' },
+    { title: 'Remaining', value: kibblesLeft, icon: '🎚️', circle: true },
+    { title: 'Limit', value: dailyServiceLimit, icon: '🛑' },
+    { title: 'Requests', value: dailyRequestCounter, icon: '🙀' },
   ];
 
   const [modalState, setModalState] = useState({
     isDispenseModalOpen: false,
     isAdjustModalOpen: false,
-    limit: 5, // initial limit value
+    limit: dailyServiceLimit,
   });
+
+  useEffect(() => {
+    setModalState((prevState) => ({
+      ...prevState,
+      limit: dailyServiceLimit,
+    }));
+  }, [dailyServiceLimit]);
 
   const [showConfetti, setShowConfetti] = useState(false);
 
@@ -44,7 +81,6 @@ const Dashboard: React.FC = () => {
     // Add your logic for canceling the action of feeding the animal
     toggleModal('dispense');
   };
-
   return (
     <div className="w-screen h-screen flex flex-col items-center text-center">
       {showConfetti && <Confetti numberOfPieces={200} />}

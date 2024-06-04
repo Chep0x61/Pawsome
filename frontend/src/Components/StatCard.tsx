@@ -3,7 +3,7 @@ import CircularProgressBar from './CircularProgressBar';
 
 interface StatCardProps {
   title: string;
-  value: string;
+  value: string | number;
   icon: string;
   circle?: boolean;
 }
@@ -17,7 +17,7 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, icon, circle = false 
       </div>
       <div className="flex flex-grow justify-center items-center">
         {circle ? (
-          <CircularProgressBar percentage={value} color={"#d89ca8"} />
+          <CircularProgressBar percentage={String(value)} color={"#d89ca8"} />
         ) : (
           <p className='text-xl md:text-2xl font-bold'>{value}</p>
         )}

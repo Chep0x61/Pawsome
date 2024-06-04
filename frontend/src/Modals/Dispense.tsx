@@ -1,4 +1,6 @@
 import React from 'react';
+import { ref, get, set } from 'firebase/database';
+import { database } from '../firebase';
 import SlideButton from 'react-slide-button';
 import ShimmerButton from '../Components/ShimmerButton';
 import toast from 'react-hot-toast';
@@ -9,6 +11,44 @@ interface DispenseProps {
 }
 
 const Dispense: React.FC<DispenseProps> = ({ onConfirm, onCancel }) => {
+  const handleConfirm = () => {
+    const feedCounterRef = ref(database, 'dailyFeedCounter');
+    const kibblesLeftRef = ref(database, 'kibblesLeft');
+    const dailyServiceLimitRef = ref(database, 'dailyServiceLimit');
+    const feedButtonPressedRef = ref(database, 'feedButtonPressed');
+
+    get(kibblesLeftRef).then((snapshot) => {
+      const kibblesLeft = Number(snapshot.val());
+      if (kibblesLeft === 0) {
+        toast.error('There is no food left to dispense.');
+        return;
+      }
+
+      get(feedCounterRef).then((snapshot) => {
+        const feedCounter = Number(snapshot.val());
+        get(dailyServiceLimitRef).then((snapshot) => {
+          const dailyServiceLimit = Number(snapshot.val());
+          if (feedCounter >= dailyServiceLimit) {
+            toast.error('You have reached the daily limit for dispensing food.');
+            return;
+          }
+
+          set(feedCounterRef, feedCounter + 1);
+          set(kibblesLeftRef, kibblesLeft - 10);
+          set(feedButtonPressedRef, true);
+
+          onConfirm();
+          toast.success('A portion of food has been dispensed!', {
+            duration: 2000,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
+        });
+      });
+    });
+  };
+
   return (
     <>
       <div className="flex flex-col items-center justify-center mt-1">
@@ -18,10 +58,7 @@ const Dispense: React.FC<DispenseProps> = ({ onConfirm, onCancel }) => {
         <SlideButton
           mainText="Slide to confirm"
           overlayText="Confirmed"
-          onSlideDone={() => {
-            onConfirm();
-            toast.success('A portion of food has been dispensed !');
-          }}
+          onSlideDone={handleConfirm}
           customCaretWidth={40}
           minSlideWidth={0.8}
           minSlideVelocity={0.6}

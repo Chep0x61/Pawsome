@@ -1,6 +1,7 @@
 import Globe from "../../Components/Globe";
 import ShimmerButton from "../../Components/ShimmerButton";
 import { useNavigate } from 'react-router-dom';
+import Paw from '../../Assets/paw.png';
 
 
 const Hero = () => {
@@ -15,7 +16,7 @@ const Hero = () => {
       <div className="flex w-full overflow-hidden demi-diamond-background bg-[#f1f1f1]">
         <div className="flex flex-col items-center justify-items-start p-10 mb-64 md:mb-80">
           <div className="flex items-center justify-top gap-4">
-            <img className="w-20 md:w-28" src="/paw.png" alt="Pawsome Logo" />
+            <img className="w-20 md:w-28" src={Paw} alt="Pawsome Logo" />
             <p className="text-center text-5xl md:text-7xl font-semibold leading-none text-sky-400">
               Pawsome
             </p>
